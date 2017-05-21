@@ -3,12 +3,12 @@ package model
 import "time"
 
 type OrderInfo struct {
-	id int
-	name string
-	age  int
-	createTime time.Time
-	updateTime time.Time
-	version int
+	Id int
+	Name string
+	Age  int
+	CreateTime time.Time
+	UpdateTime time.Time
+	Version int
 }
 
 type OrderInfoResponse struct {

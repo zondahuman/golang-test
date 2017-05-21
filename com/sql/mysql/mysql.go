@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"golang-test/com/sql/model"
+	"time"
 )
 
 func findByPk(pk int) int {
@@ -45,11 +46,15 @@ func insert(name string, age int) interface{}  {
 	}
 	defer db.Close()
 
-	stmt, err := db.Prepare("insert into order_info(name,age)values(?,?)")
+	stmt, err := db.Prepare("insert into order_info(name,age,create_time,update_time,version)values(?,?,?,?,?)")
 	if err != nil {
 		log.Println(err)
 	}
-	rs, err := stmt.Exec(name, age)
+
+	var datetime = time.Now()
+	datetime.Format(time.RFC3339)
+	//rs, err := stmt.Exec(name, age, time.Now(), time.Now(), 0)
+	rs, err := stmt.Exec(name, age, datetime, datetime, 0)
 	if err != nil {
 		log.Println(err)
 	}
@@ -67,22 +72,26 @@ func insert(name string, age int) interface{}  {
 	return orderInfoResponse
 }
 
-func findParam(pk int) int {
+func findParam(pk int) interface{} {
 	db, err := sql.Open("mysql", "root:root@tcp(172.16.2.133:3306)/trade?charset=utf8")
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
 
+	var id int
 	var name string
 	var age int
-	rows, err := db.Query("select name,age from order_info where id = ? ", pk)
+	var create_time time.Time
+	var update_time time.Time
+	var version int
+	rows, err := db.Query("select * from order_info where id = ? ", pk)
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer rows.Close()
 	for rows.Next() {
-		err := rows.Scan(&name, &age)
+		err := rows.Scan(&id, &name, &age, &create_time, &update_time, &version)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -91,7 +100,9 @@ func findParam(pk int) int {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("name:", name, "age:", age)
-	return 1
+	orderInfo := &model.OrderInfo{Id:id,Name:name,Age:age,CreateTime:create_time,UpdateTime:update_time,Version:version}
+
+	fmt.Println("orderInfo:", orderInfo)
+	return orderInfo
 }
 
