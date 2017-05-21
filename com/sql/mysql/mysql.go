@@ -52,8 +52,7 @@ func insert(name string, age int) interface{}  {
 	}
 
 	var datetime = time.Now()
-	datetime.Format(time.RFC3339)
-	//rs, err := stmt.Exec(name, age, time.Now(), time.Now(), 0)
+	//datetime.Format(time.RFC3339)
 	rs, err := stmt.Exec(name, age, datetime, datetime, 0)
 	if err != nil {
 		log.Println(err)
