@@ -17,3 +17,15 @@ go install golang-test/com/sql/mysql
 
 go test -v golang-test/com/sql/mysql -run ^Test_insert$
 go test -v golang-test/com/sql/mysql -run 'Test_insert'
+go test -v golang-test/com/sql/mysql -run 'Test_findParam'
+
+
+
+
+
+
+
+
+
+
+
