@@ -1,0 +1,12 @@
+*.exe
+.build
+.idea
+*.lock
+*.swp
+*.eml
+*.iml
+bin
+pkg
+#bin
+*.log
+velocity.log*
