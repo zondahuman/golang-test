@@ -59,11 +59,11 @@ func operateSetnx(key string, value string) int {
 func operateSet(key string, value string) {
 	client := getClient()
 	fmt.Println("client=", client)
-	value, err := client.Do("SET", key, value)
+	affect, err := client.Do("SET", key, value)
 	if err != nil {
 		fmt.Println("err=", err)
 	}
-	fmt.Println("value=", value)
+	fmt.Println("affect=", affect)
 
 }
 
