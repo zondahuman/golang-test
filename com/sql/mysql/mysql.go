@@ -11,10 +11,7 @@ import (
 
 func findByPk(pk int) int {
 	var num int = 0
-	db, err := sql.Open("mysql", "root:root@tcp(172.16.2.133:3306)/trade?charset=utf8")
-	if err != nil {
-		panic(err.Error())
-	}
+	db := getDb()
 	defer db.Close()
 	stmtOut, err := db.Prepare("select * from order_info where id=?")
 	if err != nil {
@@ -30,20 +27,16 @@ func findByPk(pk int) int {
 }
 
 
-//func getDb() sql.DB{
-//	db, err := sql.Open("mysql", "root:root@tcp(172.16.2.133:3306)/trade?charset=utf8")
-//	if err != nil {
-//		panic(err.Error())
-//	}
-//	return db;
-//}
-
-func insert(name string, age int) interface{}  {
-//func insert(name string, age int) model.OrderInfoResponse  {
+func getDb() *sql.DB{
 	db, err := sql.Open("mysql", "root:root@tcp(172.16.2.133:3306)/trade?charset=utf8")
 	if err != nil {
 		panic(err.Error())
 	}
+	return db;
+}
+
+func insert(name string, age int) interface{}  {
+	db := getDb()
 	defer db.Close()
 
 	stmt, err := db.Prepare("insert into order_info(name,age,create_time,update_time,version)values(?,?,?,?,?)")
@@ -72,17 +65,14 @@ func insert(name string, age int) interface{}  {
 }
 
 func findParam(pk int) interface{} {
-	db, err := sql.Open("mysql", "root:root@tcp(172.16.2.133:3306)/trade?charset=utf8")
-	if err != nil {
-		panic(err.Error())
-	}
+	db := getDb()
 	defer db.Close()
 
 	var id int
 	var name string
 	var age int
-	var create_time time.Time
-	var update_time time.Time
+	var create_time string
+	var update_time string
 	var version int
 	rows, err := db.Query("select * from order_info where id = ? ", pk)
 	if err != nil {
@@ -99,7 +89,10 @@ func findParam(pk int) interface{} {
 	if err != nil {
 		fmt.Println(err)
 	}
-	orderInfo := &model.OrderInfo{Id:id,Name:name,Age:age,CreateTime:create_time,UpdateTime:update_time,Version:version}
+	DefaultTimeLoc := time.Local
+	createTime, _ := time.ParseInLocation("2006-01-02 15:04:05", create_time, DefaultTimeLoc)
+	updateTime, _ := time.Parse("2006-01-02 15:04:05", update_time)
+	orderInfo := &model.OrderInfo{Id:id,Name:name,Age:age,CreateTime:createTime,UpdateTime:updateTime,Version:version}
 
 	fmt.Println("orderInfo:", orderInfo)
 	return orderInfo
