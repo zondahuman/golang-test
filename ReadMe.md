@@ -23,6 +23,16 @@ go test -v golang-test/com/sql/mysql -run 'Test_findParam'
 
 
 
+REDIS:
+go get github.com/garyburd/redigo/redis
+
+go build golang-test/com/cache/redis
+go install golang-test/com/cache/redis
+
+
+
+
+
 
 
 
