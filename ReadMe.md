@@ -32,7 +32,11 @@ go install golang-test/com/cache/redis
 
 
 
+RABBITMQ:
+go get github.com/streadway/amqp
 
+go build golang-test/com/mq/rabbitmq
+go install golang-test/com/mq/rabbitmq
 
 
 
