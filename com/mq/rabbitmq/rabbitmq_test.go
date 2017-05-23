@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"golang-test/com/util"
+	"strconv"
 )
 
 func Test_sendRabbitmq(t *testing.T) {
 	source := "YM"
+	//source := "RRD"
 	sendRabbitmq(source)
 	//num := sendRabbitmq(11)
 	//t.Log("num=", num)
@@ -71,5 +73,26 @@ func Test_send1(t *testing.T) {
 
 	fmt.Println(string(util.GetGuid()))
 	fmt.Println(util.Number())
+	userKey := util.GetGuid()
+	fmt.Println("userKey=", userKey)
+	 result := util.Substr(userKey, 0, 15)
+	fmt.Println("result=", result)
+
+}
+
+
+
+func Test_switchCase(t *testing.T){
+	var userKey string
+	source := "YM"
+	switch source {
+		case "RRD":
+			userKey = util.GetGuid()
+		case "YM":
+			userKey = strconv.FormatInt(util.TimestampNanos(), 10)
+		default : /* Optional */
+		       userKey = ""
+	}
+		fmt.Println("userKey=", userKey)
 
 }
