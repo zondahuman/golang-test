@@ -67,7 +67,7 @@ func operateSet(key string, value string) {
 
 }
 
-func operateGet(key string) {
+func operateGet(key string) string{
 	client := getClient()
 	fmt.Println("client=", client)
 
@@ -77,4 +77,5 @@ func operateGet(key string) {
 		//return
 	}
 	fmt.Println("value=", value)
+	return value
 }
