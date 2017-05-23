@@ -10,11 +10,12 @@ import (
 
 func Test_sendRabbitmq(t *testing.T) {
 	source := "YM"
-	//source := "RRD"
 	sendRabbitmq(source)
-	//num := sendRabbitmq(11)
-	//t.Log("num=", num)
+}
 
+func Test_sendApplication(t *testing.T) {
+	source := "RRD"
+	sendRabbitmq(source)
 }
 
 func Test_sendRabbitmqs(t *testing.T) {
