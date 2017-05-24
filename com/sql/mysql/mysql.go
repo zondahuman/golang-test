@@ -13,8 +13,8 @@ func findByPk(pk int) int {
 	var num int = 0
 	db := getDb()
 	defer db.Close()
-	var id int
-	id, err = db.Get(&id, "SELECT count(*) FROM place")
+	//var id int
+	//id, err = db.Get(&id, "SELECT count(*) FROM place")
 	stmtOut, err := db.Prepare("select * from order_info where id=?")
 	if err != nil {
 		panic(err.Error())
