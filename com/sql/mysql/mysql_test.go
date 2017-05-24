@@ -28,3 +28,9 @@ func Test_findParam(t *testing.T) {
 	//t.Log("orderInfo=", orderInfo)
 	json.Marshal(orderInfo)
 }
+
+func Test_updateAge(t *testing.T) {
+	updateAge(11, 11)
+	//t.Log("orderInfo=", orderInfo)
+	//json.Marshal(orderInfo)
+}

@@ -7,6 +7,7 @@ import (
 	"log"
 	"golang-test/com/sql/model"
 	"time"
+	"errors"
 )
 
 func findByPk(pk int) int {
@@ -28,8 +29,7 @@ func findByPk(pk int) int {
 	return num
 }
 
-
-func getDb() *sql.DB{
+func getDb() *sql.DB {
 	db, err := sql.Open("mysql", "root:root@tcp(172.16.2.133:3306)/trade?charset=utf8")
 	if err != nil {
 		panic(err.Error())
@@ -37,7 +37,7 @@ func getDb() *sql.DB{
 	return db;
 }
 
-func insert(name string, age int) interface{}  {
+func insert(name string, age int) interface{} {
 	db := getDb()
 	defer db.Close()
 
@@ -62,7 +62,7 @@ func insert(name string, age int) interface{}  {
 	//var orderInfo *model.OrderInfoResponse = new(model.OrderInfoResponse)
 	//orderInfo.id = id
 	//orderInfo.affect = affect
-	 orderInfoResponse  := &model.OrderInfoResponse{Id:id,Affect:affect}
+	orderInfoResponse := &model.OrderInfoResponse{Id:id, Affect:affect}
 	return orderInfoResponse
 }
 
@@ -94,9 +94,34 @@ func findParam(pk int) interface{} {
 	DefaultTimeLoc := time.Local
 	createTime, _ := time.ParseInLocation("2006-01-02 15:04:05", create_time, DefaultTimeLoc)
 	updateTime, _ := time.Parse("2006-01-02 15:04:05", update_time)
-	orderInfo := &model.OrderInfo{Id:id,Name:name,Age:age,CreateTime:createTime,UpdateTime:updateTime,Version:version}
+	orderInfo := &model.OrderInfo{Id:id, Name:name, Age:age, CreateTime:createTime, UpdateTime:updateTime, Version:version}
 
 	fmt.Println("orderInfo:", orderInfo)
 	return orderInfo
+}
+
+func updateAge(age int, id int) {
+	if r := recover(); r != nil {
+
+		db := getDb()
+		defer db.Close()
+		//方式4 update
+		start := time.Now()
+		tx, _ := db.Begin()
+		tx.Exec("update order_info set age=? where id=?", age, id)
+		tx.Commit()
+		end := time.Now()
+		fmt.Println(" update total time:", end.Sub(start).Seconds())
+
+		   switch x := r.(type) {
+                     case string:
+                            err = errors.New(x)
+                     case error:
+                            err = x
+                     default:
+                            err = errors.New("Unknow panic")
+                     }
+	}
+
 }
 
