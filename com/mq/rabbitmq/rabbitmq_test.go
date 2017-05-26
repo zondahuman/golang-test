@@ -18,6 +18,11 @@ func Test_sendApplication(t *testing.T) {
 	sendRabbitmq(source)
 }
 
+func Test_sendApply(t *testing.T) {
+	source := "TL"
+	sendRabbitmq(source)
+}
+
 func Test_sendRabbitmqs(t *testing.T) {
 	idNo := "110101198606250113"
 	realName := "马克龙"
