@@ -52,6 +52,10 @@ func Test_sendRabbitmqs(t *testing.T) {
 	userBasicInfo.(map[string]interface{})["userKey"] = userKey
 	fmt.Println("userBasicInfo===", userBasicInfo)
 
+
+
+	fmt.Println("jsonMap===---------", jsonMap)
+
 	//str2, err := json.Marshal(jsonMap)
 	//fmt.Println(string(str2))
 }
