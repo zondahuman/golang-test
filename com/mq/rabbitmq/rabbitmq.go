@@ -82,6 +82,8 @@ func splice(source string) string {
 	userBasicInfo.(map[string]interface{})["userKey"] = userKey
 	fmt.Println("userBasicInfo===", userBasicInfo)
 
+	fmt.Println("jsonMap===---------", jsonMap)
+
 	result, err := json.Marshal(jsonMap)
 	if err != nil {
 		fmt.Println(err)
