@@ -39,6 +39,11 @@ go build golang-test/com/mq/rabbitmq
 go install golang-test/com/mq/rabbitmq
 
 
+Mongodb:
+go get gopkg.in/mgo.v2
+
+
+
 
 
 
