@@ -5,7 +5,7 @@ import (
 	"github.com/streadway/amqp"
 	"fmt"
 	"encoding/json"
-	"golang-test/com/util"
+	"golang-test/com/basic/util"
 	"strconv"
 )
 

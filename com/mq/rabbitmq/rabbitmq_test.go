@@ -4,7 +4,7 @@ import (
 	"testing"
 	"encoding/json"
 	"fmt"
-	"golang-test/com/util"
+	"golang-test/com/basic/util"
 	"strconv"
 )
 
