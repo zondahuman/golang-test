@@ -1,4 +1,4 @@
-package util
+package common
 
 //截取字符串 start 起点下标 end 终点下标(不包括)
 func Substr(str string, start int, end int) string {

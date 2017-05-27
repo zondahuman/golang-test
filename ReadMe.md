@@ -48,4 +48,5 @@ https://github.com/xormplus/xorm
 https://github.com/jinzhu/gorm
 
 
-
+pycharm 2016 注册码
+https://www.360kb.com/kb/2_24.html
