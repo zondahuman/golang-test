@@ -7,6 +7,7 @@ import (
 	"strings"
 	"net/url"
 	"encoding/json"
+	"bytes"
 )
 
 func httpGet(httpUrl string) {
@@ -41,9 +42,9 @@ func httpPost(httpUrl string) {
 	fmt.Println(string(body))
 }
 
-func httpPostForm(httpUrl string) {
+func httpPostForm(httpUrl string, request map[string]string) string {
 	resp, err := http.PostForm(httpUrl,
-		url.Values{"key": {"Value"}, "id": {"123"}})
+		url.Values{})
 
 	if err != nil {
 		// handle error
@@ -55,7 +56,8 @@ func httpPostForm(httpUrl string) {
 		// handle error
 	}
 
-	fmt.Println(string(body))
+	var result = string(body)
+	return result
 
 }
 
@@ -109,9 +111,6 @@ func HttpDoi(m1 map[string]string, httpUrl string) string {
 	return result
 }
 
-
-
-
 func HttpPost(params map[string]string, headers map[string]string, httpUrl string) string {
 	client := &http.Client{}
 
@@ -137,6 +136,27 @@ func HttpPost(params map[string]string, headers map[string]string, httpUrl strin
 		panic("no value for $USER")
 	}
 	fmt.Println(json.Marshal(body))
+	var result = string(body)
+	return result
+}
+
+func HttpPostJson(json string, headers map[string]string, httpUrl string) string {
+	req, err := http.NewRequest("POST", httpUrl, bytes.NewBuffer([]byte(json)))
+	req.Header.Set("Content-Type", "application/json")
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	fmt.Println("response Status:", resp.Status)
+	fmt.Println("response Headers:", resp.Header)
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("response Body:", string(body))
 	var result = string(body)
 	return result
 }
