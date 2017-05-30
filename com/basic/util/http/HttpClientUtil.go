@@ -10,7 +10,7 @@ import (
 	"bytes"
 )
 
-func httpGet(httpUrl string) {
+func HttpGet(httpUrl string) string{
 	resp, err := http.Get(httpUrl)
 	if err != nil {
 		// handle error
@@ -23,6 +23,7 @@ func httpGet(httpUrl string) {
 	}
 
 	fmt.Println(string(body))
+	return string(body)
 }
 
 func httpPost(httpUrl string) {

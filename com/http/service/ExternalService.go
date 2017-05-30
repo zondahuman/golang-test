@@ -5,6 +5,11 @@ import (
 	"fmt"
 
 	"encoding/json"
+	"github.com/go-xorm/xorm"
+	"golang-test/com/sql/model"
+	_ "github.com/go-sql-driver/mysql"
+
+	"time"
 )
 func CallStudent(uid string, name string, id_card string, school_name string, mobile string) string{
 	httpUrl := "http://python.loan.com/rules/is_student"
@@ -46,6 +51,27 @@ func CallLendHistory(uid string, phoneList []string, idCardList []string) string
 	fmt.Println("json=======", string(json))
 	//result := common.HttpPostJson(json, header, httpUrl)
 	result := common.HttpPostJson(string(json), header, httpUrl)
+
+	fmt.Println("result=", result)
+	return result
+}
+
+
+func CallWeather(regionCode string) string{
+	httpUrl := "http://www.weather.com.cn/data/sk/"+regionCode+".html"
+	var engine *xorm.Engine
+    	engine, err := xorm.NewEngine("mysql", "root:root@tcp(172.16.2.133:3306)/trade?charset=utf8")
+	if err != nil {
+		fmt.Println("err==", err)
+	}
+	var key int
+	weatherInfo := &model.WeatherInfo{Id:key,CallStatus:"INIT",Region:regionCode,ResponseContent:"",CreateTime:time.Now(),UpdateTime:time.Now()}
+	//affected, err := engine.Insert(&model.WeatherInfo{CallStatus:"INIT",Region:regionCode,ResponseContent:"",CreateTime:time.Now(),UpdateTime:time.Now()})
+	affected, err := engine.Insert(weatherInfo)
+	fmt.Println("affected=", affected, "id=",weatherInfo.Id)
+	result := common.HttpGet(httpUrl)
+	affectedUpdate, err := engine.Update(&model.WeatherInfo{CallStatus:"SUCCESS",Region:regionCode,ResponseContent:result,CreateTime:time.Now(),UpdateTime:time.Now()})
+	fmt.Println("affectedUpdate=", affectedUpdate)
 
 	fmt.Println("result=", result)
 	return result

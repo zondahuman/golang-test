@@ -6,6 +6,7 @@ import (
 	"golang-test/com/http/service"
 	"golang-test/com/http/model"
 	"encoding/json"
+	 _ "github.com/go-sql-driver/mysql"
 )
 
 
@@ -65,34 +66,9 @@ func Test_CallLendHistory(t *testing.T) {
 
 
 
-func Test_JsonTtransfer(t *testing.T) {
-	//{"uid":"306","name":"崔孝范","id_card":"230405197608040640","mobile":"18500804170","school_name":"把株式会社"}
-	uid := "306"
-	var phoneList []string
-	phoneList = append(phoneList, "18513622928")
-	fmt.Println("phoneList=======", len(phoneList))
-
-	jsonPhoneList, err := json.Marshal(phoneList)
-	if err != nil {
-	    fmt.Println("error:", err)
-	}
-	fmt.Println("jsonPhoneList=======", string(jsonPhoneList))
-
-	var idCardList []string
-	idCardList = append(idCardList, "230405197608040640")
-
-	request := make(map[string]interface{})
-	request["uid"] = uid
-
-	request["phones"] = phoneList
-
-	request["id_cards"] = idCardList
-
-	json, err := json.Marshal(request)
-	if err != nil {
-	    fmt.Println("error:", err)
-	}
-
-	fmt.Println("json=======", json)
-	fmt.Println("json=======", string(json))
+func Test_CallWeather(t *testing.T) {
+	region := "101010100"
+	var result string
+	result = service.CallWeather(region)
+	fmt.Println("result=======", result)
 }
