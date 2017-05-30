@@ -4,6 +4,10 @@ package model
 type StudentModel struct{
 	Status  int   "status"
 	Message string   "message"
+	data StudentData "data"
+}
+type StudentData struct{
+	Result int32
 }
 
 
