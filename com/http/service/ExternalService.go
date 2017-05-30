@@ -6,7 +6,7 @@ import (
 
 	"encoding/json"
 	"github.com/go-xorm/xorm"
-	"golang-test/com/sql/model"
+	"golang-test/com/persist/model"
 	_ "github.com/go-sql-driver/mysql"
 
 	"time"
