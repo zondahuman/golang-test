@@ -54,7 +54,7 @@ func Test_CallLendHistory(t *testing.T) {
 	fmt.Println("result====", result)
 
 	//obj := model.StudentModel{}
-	var obj model.StudentModel
+	var obj model.LendAplication
 	if err := json.Unmarshal([]byte(result), &obj); err == nil{
 		fmt.Println("obj====", obj)
 	}else{
