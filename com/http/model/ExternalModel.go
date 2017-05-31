@@ -56,3 +56,18 @@ type Lend struct{
 	Create_time string
 	Main_reason string
 }
+
+
+
+type IpModel struct{
+	Ret int8
+	Start int
+	End int
+	Country string
+	Province string
+	City string
+	District string
+	Isp string
+	Type string
+	Desc string
+}

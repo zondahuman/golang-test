@@ -76,3 +76,19 @@ func CallWeather(regionCode string) string{
 	fmt.Println("result=", result)
 	return result
 }
+
+
+func CallMobileAttribution(mobile string) string {
+	httpUrl := "http://www.apifree.net/mobile/"+mobile+".xml"
+	result := common.HttpGet(httpUrl)
+	fmt.Println("result=", result)
+	return result
+}
+
+func CallIpAttribution(ip string) string {
+	httpUrl := "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&ip="+ip
+	result := common.HttpGet(httpUrl)
+	fmt.Println("result=", result)
+
+	return string(result)
+}
