@@ -88,7 +88,8 @@ func Test_CallIpAttribution(t *testing.T) {
 
 	var ipModel model.IpModel
 	if err := json.Unmarshal([]byte(result), &ipModel); err == nil{
-		fmt.Println("ipModel====", ipModel)
+		fmt.Println("ipModel====%+v\n", ipModel)
+		fmt.Println("%+v\n", ipModel)
 	}else{
 		fmt.Println("json error ;", err)
 	}
