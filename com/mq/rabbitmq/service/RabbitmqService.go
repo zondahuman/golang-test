@@ -41,6 +41,32 @@ func SendRabbitmq(source string) {
 	failOnError(err, "Failed to publish a message")
 }
 
+
+func  SendLend(source string) int{
+	conn, err := amqp.Dial("amqp://guest:guest@172.16.2.145:15671/")
+	failOnError(err, "Failed to connect to RabbitMQ")
+	defer conn.Close()
+
+	ch, err := conn.Channel()
+	failOnError(err, "Failed to open a channel")
+	defer ch.Close()
+
+	err = ch.Publish(
+		"audit.exchange", // exchange
+		"auditRequestKey", // routing key
+		false, // mandatory
+		false, // immediate
+		amqp.Publishing{
+			ContentType: "text/plain",
+			MessageId:   string(1),
+			Type:        "AgentJob",
+			Body:        []byte(splice(source)),
+		})
+	log.Println("send ok")
+	failOnError(err, "Failed to publish a message")
+	return 0
+}
+
 func splice(source string) string {
 	idNo := "110101198606250113"
 	realName := "马克龙"
