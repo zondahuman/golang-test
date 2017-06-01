@@ -8,21 +8,22 @@ import (
 	"golang-test/com/basic/common"
 	"strconv"
 	"golang-test/com/basic/util/random"
+	"golang-test/com/mq/rabbitmq/service"
 )
 
 func Test_sendRabbitmq(t *testing.T) {
 	source := "YM"
-	sendRabbitmq(source)
+	service.SendRabbitmq(source)
 }
 
 func Test_sendApplication(t *testing.T) {
 	source := "RRD"
-	sendRabbitmq(source)
+	service.SendRabbitmq(source)
 }
 
 func Test_sendApply(t *testing.T) {
 	source := "TL"
-	sendRabbitmq(source)
+	service.SendRabbitmq(source)
 }
 
 func Test_sendRabbitmqs(t *testing.T) {
