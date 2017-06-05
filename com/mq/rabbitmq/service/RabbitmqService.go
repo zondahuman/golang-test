@@ -11,11 +11,13 @@ import (
 	"golang-test/com/basic/common"
 )
 
+
 func failOnError(err error, msg string) {
 	if err != nil {
 		log.Fatalf("%s: %s", msg, err)
 	}
 }
+
 
 func SendRabbitmq(source string) {
 	conn, err := amqp.Dial("amqp://guest:guest@172.16.2.145:15671/")
@@ -120,4 +122,10 @@ func splice(source string) string {
 
 	return string(result)
 }
+
+
+
+
+
+
 
