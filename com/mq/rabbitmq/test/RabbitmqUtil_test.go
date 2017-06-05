@@ -31,7 +31,7 @@ func Test_Call(t *testing.T) {
 			channel := make(chan int, limit)
 			for i := 0; i < limit; i++ {
 				go func() {
-					channel <- service.Push("TL")
+					channel <- service.Push(constants.TL)
 				}()
 				fmt.Println(<-channel)
 			}
