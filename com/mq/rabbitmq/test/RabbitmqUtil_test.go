@@ -27,7 +27,7 @@ func Test_Call(t *testing.T) {
 	go func() {
 		runtime.GOMAXPROCS(runtime.NumCPU())
 		for {
-			var limit = constants.HUNDRED
+			var limit = constants.THOUSAND
 			channel := make(chan int, limit)
 			for i := 0; i < limit; i++ {
 				go func() {
