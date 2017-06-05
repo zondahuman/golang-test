@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"golang-test/com/basic/util/random"
 	"golang-test/com/mq/rabbitmq/service"
+	"golang-test/com/mq/rabbitmq/constants"
 )
 
 func Test_sendRabbitmq(t *testing.T) {
@@ -27,10 +28,11 @@ func Test_sendApply(t *testing.T) {
 }
 
 func Test_sendApply1(t *testing.T) {
-	channel := make(chan int, 100)
-	for i := 0; i < 100; i++ {
+	var limit = constants.TEN
+	channel := make(chan int, limit)
+	for i := 0; i < limit; i++ {
 		go func() {
-			channel <- service.SendLend("YM")
+			channel <- service.SendLend("TL")
 		}()
 		fmt.Println(<-channel)
 	}
