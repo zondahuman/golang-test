@@ -34,7 +34,7 @@ func SendRabbitmq(source string) {
 		amqp.Publishing{
 			ContentType: "text/plain",
 			MessageId:   string(1),
-			Type:        "AgentJob",
+			Type:        "",
 			Body:        []byte(splice(source)),
 		})
 	log.Println("send ok")
@@ -59,7 +59,7 @@ func  SendLend(source string) int{
 		amqp.Publishing{
 			ContentType: "text/plain",
 			MessageId:   string(1),
-			Type:        "AgentJob",
+			Type:        "",
 			Body:        []byte(splice(source)),
 		})
 	log.Println("send ok")
