@@ -49,3 +49,20 @@ func Test_Call(t *testing.T) {
 	service.Close()
 }
 
+func Test_Receive(t *testing.T) {
+
+	go func() {
+		runtime.GOMAXPROCS(runtime.NumCPU())
+		for {
+			service.Receive()
+			time.Sleep(1 * time.Second)
+		}
+
+		//for {
+		//	go service.Push("TL")
+		//	time.Sleep(1 * time.Second)
+		//}
+	}()
+	fmt.Println("end")
+}
+
