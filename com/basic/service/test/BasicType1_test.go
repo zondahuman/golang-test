@@ -3,6 +3,8 @@ package test
 import (
 	"testing"
 	"fmt"
+	"container/list"
+	"reflect"
 )
 
 func Test_Array1(t *testing.T){
@@ -35,3 +37,43 @@ func Test_Splice1(t *testing.T){
 
 }
 
+func Test_Struct1(t *testing.T){
+	list :=list.New()
+	userBean1 := &UserBean{Id:1, Name:"lee1"}
+	list.PushBack(userBean1)
+	userBean2 := &UserBean{Id:2, Name:"lee2"}
+	list.PushBack(userBean2)
+	for elements := list.Front(); elements != nil;elements = elements.Next(){
+		fmt.Println("elements=", elements.Value)
+	}
+}
+
+func Test_Struct2(t *testing.T){
+	userBean1 := &UserBean{}
+	if isEmpty(userBean1){
+		fmt.Println("userBean1 is null")
+	}else{
+		fmt.Println("userBean1 is  ", userBean1)
+	}
+	userBean2 := &UserBean{Id:2, Name:"lee2"}
+	if userBean2 == nil{
+		fmt.Println("userBean2 is null")
+	}else{
+		fmt.Println("userBean2 is  ", userBean2)
+	}
+}
+
+
+type UserBean struct{
+	Id int "id"
+	Name string "name"
+}
+
+
+func isEmpty(a interface{}) bool {
+    v := reflect.ValueOf(a)
+    if v.Kind() == reflect.Ptr {
+        v=v.Elem()
+    }
+    return v.Interface() == reflect.Zero(v.Type()).Interface()
+}
