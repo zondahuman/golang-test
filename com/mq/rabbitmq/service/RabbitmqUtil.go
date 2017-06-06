@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"time"
 	"github.com/streadway/amqp"
+	"golang-test/com/mq/rabbitmq/constants"
 )
 
 var conn *amqp.Connection
@@ -24,7 +25,7 @@ const (
 func main() {
 	go func() {
 		for {
-			Push("TL")
+			Push(constants.TL)
 			time.Sleep(1 * time.Second)
 		}
 	}()

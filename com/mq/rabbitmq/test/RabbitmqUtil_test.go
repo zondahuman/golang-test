@@ -13,7 +13,7 @@ func Test_receive(t *testing.T) {
 
 	go func() {
 		for {
-			go service.Push("TL")
+			go service.Push(constants.TL)
 			time.Sleep(1 * time.Second)
 		}
 	}()

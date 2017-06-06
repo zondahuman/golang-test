@@ -12,27 +12,27 @@ import (
 	"golang-test/com/mq/rabbitmq/constants"
 )
 
-func Test_sendRabbitmq(t *testing.T) {
-	source := "YM"
+func Test_sendBeauty(t *testing.T) {
+	source := constants.YM
 	service.SendRabbitmq(source)
 }
 
-func Test_sendApplication(t *testing.T) {
-	source := "RRD"
+func Test_sendLoan(t *testing.T) {
+	source := constants.RRD
 	service.SendRabbitmq(source)
 }
 
-func Test_sendApply(t *testing.T) {
-	source := "TL"
+func Test_sendTraining(t *testing.T) {
+	source := constants.TL
 	service.SendRabbitmq(source)
 }
 
-func Test_sendApply1(t *testing.T) {
+func Test_sendBatch(t *testing.T) {
 	var limit = constants.TEN
 	channel := make(chan int, limit)
 	for i := 0; i < limit; i++ {
 		go func() {
-			channel <- service.SendLend("TL")
+			channel <- service.SendLend(constants.TL)
 		}()
 		fmt.Println(<-channel)
 	}
@@ -43,7 +43,7 @@ func Test_sendApply1(t *testing.T) {
 func Test_sendApply2(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		fmt.Println(i, " --start")
-		go service.SendLend("YM")
+		go service.SendLend(constants.YM)
 		fmt.Println(i, " --end")
 
 	}
