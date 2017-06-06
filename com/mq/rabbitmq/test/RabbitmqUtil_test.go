@@ -66,3 +66,19 @@ func Test_Receive(t *testing.T) {
 	fmt.Println("end")
 }
 
+func init() {
+	fmt.Println("init------start")
+	go func() {
+		runtime.GOMAXPROCS(runtime.NumCPU())
+		for {
+			service.Receive()
+			time.Sleep(1 * time.Second)
+		}
+
+		//for {
+		//	go service.Push("TL")
+		//	time.Sleep(1 * time.Second)
+		//}
+	}()
+	fmt.Println("init------end")
+}

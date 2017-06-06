@@ -28,7 +28,7 @@ func Test_sendApply(t *testing.T) {
 }
 
 func Test_sendApply1(t *testing.T) {
-	var limit = constants.HUNDRED
+	var limit = constants.TEN
 	channel := make(chan int, limit)
 	for i := 0; i < limit; i++ {
 		go func() {
