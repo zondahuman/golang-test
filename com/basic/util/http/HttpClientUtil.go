@@ -96,7 +96,7 @@ func httpDo(httpUrl string) {
 	fmt.Println(string(body))
 }
 
-func HttpPostFormByCookie(m1 map[string]string, httpUrl string, httpLoginUrl string) string {
+func HttpPostFormByCookie(params map[string]string, headers map[string]string, httpUrl string, httpLoginUrl string) string {
 	jar := new(Jar)
 	client := &http.Client{nil, nil, jar, 99999999999992}
 
@@ -116,7 +116,7 @@ func HttpPostFormByCookie(m1 map[string]string, httpUrl string, httpLoginUrl str
 	}
 
 	var request = url.Values{}
-	for k, v := range m1 {
+	for k, v := range params {
 		request.Add(k, v)
 	}
 
@@ -124,7 +124,9 @@ func HttpPostFormByCookie(m1 map[string]string, httpUrl string, httpLoginUrl str
 
 	req, err := http.NewRequest("POST", httpUrl, strings.NewReader(data))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	//req.Header.Set("Cookie", "name=anny")
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
 
 	resp, err := client.Do(req)
 

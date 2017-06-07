@@ -110,7 +110,7 @@ func CallSchedule(applicationId string, column string, status string, httpUrl st
 	header["RRDSource"] = "YM"
 
 	fmt.Println("json=======", string(json))
-	result := common.HttpPostFormByCookie(request, httpUrl, httpLoginUrl)
+	result := common.HttpPostFormByCookie(request, header, httpUrl, httpLoginUrl)
 
 	fmt.Println("result=", result)
 	return result
