@@ -92,3 +92,26 @@ func CallIpAttribution(ip string) string {
 
 	return string(result)
 }
+
+
+func CallSchedule(applicationId string, column string, status string, httpUrl string, httpLoginUrl string) string{
+	request := make(map[string]string)
+	request["applicationId"] = applicationId
+	request["column"] = column
+	request["status"] = status
+
+	json, err := json.Marshal(request)
+	if err != nil {
+	    fmt.Println("error:", err)
+	}
+
+	header := make(map[string]string)
+	header["Cookie"] = "rules_session_id=64b713c52c7511e6a4519801a7928995"
+	header["RRDSource"] = "YM"
+
+	fmt.Println("json=======", string(json))
+	result := common.HttpPostFormByCookie(request, httpUrl, httpLoginUrl)
+
+	fmt.Println("result=", result)
+	return result
+}

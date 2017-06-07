@@ -28,7 +28,7 @@ func Test_sendTraining(t *testing.T) {
 }
 
 func Test_sendBatch(t *testing.T) {
-	var limit = constants.FIVE_HUNDRED
+	var limit = constants.FIVE
 	channel := make(chan int, limit)
 	for i := 0; i < limit; i++ {
 		go func() {
