@@ -141,7 +141,7 @@ func HttpPostFormByCookie(params map[string]string, headers map[string]string, h
 	return result
 }
 
-func HttpPostJsonByCookie(m1 map[string]string, httpUrl string, httpLoginUrl string) string {
+func HttpPostJsonByCookie(params map[string]string, headers map[string]string, httpUrl string, httpLoginUrl string) string {
 	jar := new(Jar)
 	client := &http.Client{nil, nil, jar, 99999999999992}
 
@@ -161,7 +161,7 @@ func HttpPostJsonByCookie(m1 map[string]string, httpUrl string, httpLoginUrl str
 	}
 
 	var request = url.Values{}
-	for k, v := range m1 {
+	for k, v := range params {
 		request.Add(k, v)
 	}
 
@@ -169,7 +169,9 @@ func HttpPostJsonByCookie(m1 map[string]string, httpUrl string, httpLoginUrl str
 
 	req, err := http.NewRequest("POST", httpUrl, strings.NewReader(data))
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
-	//req.Header.Set("Cookie", "name=anny")
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
 
 	resp, err := client.Do(req)
 
