@@ -82,12 +82,14 @@ func Test_send1(t *testing.T) {
 
 func Test_switchCase(t *testing.T) {
 	var userKey string
-	source := "YM"
+	source := constants.YM
 	switch source {
-	case "RRD":
+	case constants.RRD:
 		userKey = uuid.GetGuid()
-	case "YM":
+	case constants.YM:
 		userKey = strconv.FormatInt(util.TimestampNanos(), 10)
+	case constants.TL:
+		userKey = uuid.GetGuid()
 	default : /* Optional */
 		userKey = ""
 	}
