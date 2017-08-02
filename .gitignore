@@ -1,3 +1,6 @@
+.exe~
+*.exe~
+.exe
 *.exe
 .build
 .idea
@@ -10,6 +13,10 @@ pkg
 #bin
 *.log
 velocity.log*
+*.tmp
+.tmp
+.idea
+.idea/
 projectFilesBackup
 /projectFilesBackup
 
