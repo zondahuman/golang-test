@@ -24,7 +24,7 @@ func Test_insert(t *testing.T) {
 }
 
 func Test_findParam(t *testing.T) {
-	orderInfo := findParam(11)
+	orderInfo := findParam(75)
 	//t.Log("orderInfo=", orderInfo)
 	json.Marshal(orderInfo)
 }

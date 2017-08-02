@@ -10,3 +10,6 @@ pkg
 #bin
 *.log
 velocity.log*
+projectFilesBackup
+/projectFilesBackup
+

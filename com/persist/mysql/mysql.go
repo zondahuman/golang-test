@@ -62,7 +62,7 @@ func insert(name string, age int) interface{} {
 	//var orderInfo *model.OrderInfoResponse = new(model.OrderInfoResponse)
 	//orderInfo.id = id
 	//orderInfo.affect = affect
-	orderInfoResponse := &model.OrderInfoResponse{Id:id, Affect:affect}
+	orderInfoResponse := &model.OrderInfoResponse{Id: id, Affect: affect}
 	return orderInfoResponse
 }
 
@@ -94,7 +94,7 @@ func findParam(pk int) interface{} {
 	DefaultTimeLoc := time.Local
 	createTime, _ := time.ParseInLocation("2006-01-02 15:04:05", create_time, DefaultTimeLoc)
 	updateTime, _ := time.Parse("2006-01-02 15:04:05", update_time)
-	orderInfo := &model.OrderInfo{Id:id, Name:name, Age:age, CreateTime:createTime, UpdateTime:updateTime, Version:version}
+	orderInfo := &model.OrderInfo{Id: id, Name: name, Age: age, CreateTime: createTime, UpdateTime: updateTime, Version: version}
 
 	fmt.Println("orderInfo:", orderInfo)
 	return orderInfo
@@ -112,16 +112,23 @@ func updateAge(age int, id int) {
 		tx.Commit()
 		end := time.Now()
 		fmt.Println(" update total time:", end.Sub(start).Seconds())
-
-		   switch x := r.(type) {
-                     case string:
-                            err = errors.New(x)
-                     case error:
-                            err = x
-                     default:
-                            err = errors.New("Unknow panic")
-                     }
+		switch x := r.(type) {
+			case string:
+				err := errors.New(x)
+				if err != nil {
+					fmt.Println(err)
+				}
+			case error:
+				err := x
+				if err != nil {
+					fmt.Println(err)
+				}
+			default:
+				err := errors.New("Unknow panic")
+				if err != nil {
+					fmt.Println(err)
+				}
+		}
 	}
 
 }
-
