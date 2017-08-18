@@ -13,6 +13,7 @@ var FIVE int = 10
 var TL string = "TL"
 var YM string = "YM"
 var RRD string = "RRD"
+var FU string = "FU"
 
 
 

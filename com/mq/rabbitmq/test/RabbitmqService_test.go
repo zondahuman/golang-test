@@ -27,6 +27,11 @@ func Test_sendTraining(t *testing.T) {
 	service.SendRabbitmq(source)
 }
 
+func Test_sendFuse(t *testing.T) {
+	source := constants.FU
+	service.SendRabbitmq(source)
+}
+
 func Test_sendBatch(t *testing.T) {
 	var limit = constants.FIVE
 	channel := make(chan int, limit)
