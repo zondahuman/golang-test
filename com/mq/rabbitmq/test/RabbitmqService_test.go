@@ -32,7 +32,20 @@ func Test_sendFuse(t *testing.T) {
 	service.SendRabbitmq(source)
 }
 
-func Test_sendBatch(t *testing.T) {
+func Test_sendBatchFuse(t *testing.T) {
+	var limit = constants.FIVE
+	channel := make(chan int, limit)
+	for i := 0; i < limit; i++ {
+		go func() {
+			channel <- service.SendLend(constants.FU)
+		}()
+		fmt.Println(<-channel)
+	}
+
+	close(channel)
+}
+
+func Test_sendBatchTl(t *testing.T) {
 	var limit = constants.FIVE
 	channel := make(chan int, limit)
 	for i := 0; i < limit; i++ {
