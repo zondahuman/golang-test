@@ -14,6 +14,7 @@ var TL string = "TL"
 var YM string = "YM"
 var RRD string = "RRD"
 var FU string = "FU"
+var LOANTL string = "LOANTL"
 
 
 

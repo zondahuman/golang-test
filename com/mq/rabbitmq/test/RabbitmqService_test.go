@@ -32,6 +32,11 @@ func Test_sendFuse(t *testing.T) {
 	service.SendRabbitmq(source)
 }
 
+func Test_sendLoanLoanTl(t *testing.T) {
+	source := constants.LOANTL
+	service.SendRabbitmq(source)
+}
+
 func Test_sendBatchFuse(t *testing.T) {
 	var limit = constants.FIVE
 	channel := make(chan int, limit)
@@ -57,6 +62,34 @@ func Test_sendBatchTl(t *testing.T) {
 
 	close(channel)
 }
+
+func Test_sendBatchRrd(t *testing.T) {
+	var limit = constants.FIVE
+	channel := make(chan int, limit)
+	for i := 0; i < limit; i++ {
+		go func() {
+			channel <- service.SendLend(constants.RRD)
+		}()
+		fmt.Println(<-channel)
+	}
+
+	close(channel)
+}
+
+func Test_sendBatchLoanTL(t *testing.T) {
+	var limit = constants.FIVE
+	channel := make(chan int, limit)
+	for i := 0; i < limit; i++ {
+		go func() {
+			channel <- service.SendLend(constants.LOANTL)
+		}()
+		fmt.Println(<-channel)
+	}
+
+	close(channel)
+}
+
+
 
 func Test_sendApply2(t *testing.T) {
 	for i := 0; i < 10; i++ {
