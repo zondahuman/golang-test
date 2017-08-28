@@ -13,20 +13,20 @@ import (
 )
 
 
-func failOnError(err error, msg string) {
+func failLendOnError(err error, msg string) {
 	if err != nil {
 		log.Fatalf("%s: %s", msg, err)
 	}
 }
 
 
-func SendRabbitmq(source string) {
+func LendRabbitmq(source string) {
 	conn, err := amqp.Dial("amqp://guest:guest@172.16.2.145:15671/")
-	failOnError(err, "Failed to connect to RabbitMQ")
+	failLendOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
 
 	ch, err := conn.Channel()
-	failOnError(err, "Failed to open a channel")
+	failLendOnError(err, "Failed to open a channel")
 	defer ch.Close()
 
 	err = ch.Publish(
@@ -41,17 +41,17 @@ func SendRabbitmq(source string) {
 			Body:        []byte(splice(source)),
 		})
 	log.Println("send ok")
-	failOnError(err, "Failed to publish a message")
+	failLendOnError(err, "Failed to publish a message")
 }
 
 
-func  SendLend(source string) int{
+func LendMessage(source string) int{
 	conn, err := amqp.Dial("amqp://guest:guest@172.16.2.145:15671/")
-	failOnError(err, "Failed to connect to RabbitMQ")
+	failLendOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
 
 	ch, err := conn.Channel()
-	failOnError(err, "Failed to open a channel")
+	failLendOnError(err, "Failed to open a channel")
 	defer ch.Close()
 
 	err = ch.Publish(
@@ -63,14 +63,14 @@ func  SendLend(source string) int{
 			ContentType: "text/plain",
 			MessageId:   string(1),
 			Type:        "",
-			Body:        []byte(splice(source)),
+			Body:        []byte(spliceLend(source)),
 		})
 	log.Println("send ok")
-	failOnError(err, "Failed to publish a message")
+	failLendOnError(err, "Failed to publish a message")
 	return 0
 }
 
-func splice(source string) string {
+func spliceLend(source string) string {
 	//idNo := "110101198606250113"
 	//realName := "马克龙"
 	idNo := "150426198611084093"
@@ -130,9 +130,9 @@ func splice(source string) string {
 	fmt.Println("userBasicInfo===", userBasicInfo)
 	userBasicInfo.(map[string]interface{})["idNo"] = idNo
 	userBasicInfo.(map[string]interface{})["realName"] = realName
-	//userBasicInfo.(map[string]interface{})["userKey"] = userKey
-	userBasicInfo.(map[string]interface{})["userKey"] = "0f2ada9328b4eb468d6d0122cb9b6924"
-	userBasicInfo.(map[string]interface{})["callHistoryJobId"] = "8ca7fe67-60a8-4cb1-b48d-07ea5a247039"
+	userBasicInfo.(map[string]interface{})["userKey"] = userKey
+	//userBasicInfo.(map[string]interface{})["userKey"] = "0f2ada9328b4eb468d6d0122cb9b6924"
+	//userBasicInfo.(map[string]interface{})["callHistoryJobId"] = "8ca7fe67-60a8-4cb1-b48d-07ea5a247039"
 	fmt.Println("userBasicInfo===", userBasicInfo)
 
 	fmt.Println("jsonMap===---------", jsonMap)
