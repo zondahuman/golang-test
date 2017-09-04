@@ -12,6 +12,13 @@ import (
 	"golang-test/com/mq/rabbitmq/constants"
 )
 
+
+func Test_lendLoanConfirm(t *testing.T) {
+	source := constants.CONFIRMED
+	service.LendMessageConfirm(source)
+}
+
+
 func Test_lendBeauty(t *testing.T) {
 	source := constants.YM
 	service.LendMessage(source)

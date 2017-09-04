@@ -79,6 +79,10 @@ func spliceLend(source string) string {
 	var body string
 	taskType := util.Number10()
 	switch source {
+		case constants.CONFIRMED:
+			userKey = uuid.GetGuid()
+			body = "{\"sendTime\":1489747985863,\"uniqKey\":\"224ijnr0No7zml4J1\",\"source\":\"RRD\",\"type\":\"AUDIT_REQUEST\",\"sequenceId\":0,\"data\":{\"taskType\":52}}"
+
 		case constants.RRD:
 			userKey = uuid.GetGuid()
 			//body = "{\"sendTime\":1489747985863,\"uniqKey\":\"224ijnr0No7zml4J1\",\"source\":\"RRD\",\"type\":\"AUDIT_REQUEST\",\"sequenceId\":0,\"data\":{\"applicationSn\":\"224ijnr0No7zml4J1\",\"applicationSource\":\"RRD\",\"taskType\":52,\"description\":\"首次进件\",\"loanInfo\":{},\"userBasicInfo\":{\"callHistoryJobId\":\"a5a59e7f-5c87-42f1-9bc9-af16d58bb4b8\",\"userKey\":\"0bb6c3ad28355d4d7479f276673fface\",\"idNo\":\"370285199110282926\",\"realName\":\"王萌\",\"gender\":\"FEMALE\",\"idCardPhotoFront\":\"http://172.16.1.76//Nirvana-2017-03-17/ID_CARD_POSITIVE_224_2017-03-17_18-47-44_avatar.png\",\"idCardPhotoBack\":\"http://172.16.1.76//Nirvana-2017-03-17/ID_CARD_NEGATIVE_224_2017-03-17_18-47-56_avatar.png\",\"idNoValidityDate\":\"2023-08-22\",\"mobile\":\"18513622928\",\"reserveMobile\":\"18513622928\",\"email\":\"123456@qq.com\",\"blackBoxId\":\"ewogICJ0b2tlbklkIiA6ICJyZW5yZW5kYWkxNWFkYWY4NDA4Zi03YjMyZDQyMGQxOWM5NzgzNWU2OTYxYjI3ZTM3ODAwNyIsCiAgIm9zIiA6ICJpT1MiLAogICJwcm9maWxlVGltZSIgOiA0NDcsCiAgInZlcnNpb24iIDogIjIuMS40Igp9\",\"houseProvince\":\"2\",\"houseCity\":\"36\",\"houseDistrict\":\"377\",\"houseAddress\":\"默默\",\"homeAddress\":\"山东省莱西市院上镇朱西庄村198号\",\"platform\":\"IOS\",\"cardNo\":\"6217000010042791759\",\"educationDegree\":\"COLLEGE\",\"graduateDate\":\"2014-06-01\"},\"emergencyContactList\":[{\"name\":\"登录账号\",\"mobile\":\"15678100724\",\"relation\":\"其他\"},{\"name\":\"畅悦秀\",\"mobile\":\"15010695238\",\"relation\":\"其他\"}],\"contactList\":[{\"name\":\"畅悦秀\",\"mobile\":\"15010695238\"},{\"name\":\"登录账号\",\"mobile\":\"15678100724\"}],\"positionList\":[{\"createTime\":1489747689000,\"eventType\":\"APPLY_LOAN\",\"ipAddress\":\"10.20.1.97\",\"lng\":\"116.33719815643\",\"lat\":\"39.99973988301\",\"province\":\"\",\"city\":\"\",\"position\":\"北京市海淀区中关村东路1号\"}],\"facePlusPlus\":{\"confidence\":8.01,\"thresholds_1e_3\":8.01,\"thresholds_1e_4\":8.01,\"thresholds_1e_5\":8.01,\"thresholds_1e_6\":8.01,\"mask_confidence\":8.01,\"screen_replay_confidence\":8.01,\"mask_threshold\":8.01,\"synthetic_face_confidence\":8.01,\"synthetic_face_threshold\":8.01,\"screen_replay_threshold\":8.01,\"face_replaced\":6},\"competitionProductsList\":[{\"appPackageName\":\"融360\",\"appName\":\"分期付款\",\"updateDayDiff\":1430236800},{\"appPackageName\":\"普惠金融\",\"appName\":\"现金借贷\",\"updateDayDiff\":1470236800}],\"reloan_info\":{\"is_reloan\":0}}}"
@@ -152,6 +156,70 @@ func spliceLend(source string) string {
 }
 
 
+func LendMessageConfirm(source string) int{
+	conn, err := amqp.Dial("amqp://guest:guest@172.16.2.145:15671/")
+	failLendOnError(err, "Failed to connect to RabbitMQ")
+	defer conn.Close()
+
+	ch, err := conn.Channel()
+	failLendOnError(err, "Failed to open a channel")
+	defer ch.Close()
+
+	err = ch.Publish(
+		"audit.exchange", // exchange
+		"auditRequestKey", // routing key
+		false, // mandatory
+		false, // immediate
+		amqp.Publishing{
+			ContentType: "text/plain",
+			MessageId:   string(1),
+			Type:        "",
+			Body:        []byte(spliceLendConfirm(source)),
+		})
+	log.Println("send ok")
+	failLendOnError(err, "Failed to publish a message")
+	return 0
+}
+
+
+func spliceLendConfirm(source string) string {
+	var userKey string
+	var body string
+	taskType := util.Number10()
+	switch source {
+		case constants.CONFIRMED:
+			userKey = uuid.GetGuid()
+			body = "{\"sendTime\":1489747985863,\"uniqKey\":\"224ijnr0No7zml4J1\",\"source\":\"RRD\",\"type\":\"AUDIT_CONFIRMED\",\"sequenceId\":0,\"data\":{\"taskType\":52}}"
+		default : /* Optional */
+			userKey = ""
+	}
+	userKey = common.Substr(userKey, 0, 15)
+	jsonMap := make(map[string]interface{})
+	err := json.Unmarshal([]byte(body), &jsonMap)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("jsonMap===", jsonMap)
+	jsonMap["uniqKey"] = userKey
+	fmt.Println("jsonMap===", jsonMap)
+
+	data := jsonMap["data"]
+	fmt.Println("data===", data)
+	//data.(map[string]interface{})["applicationSn"] = userKey
+	data.(map[string]interface{})["taskType"] = taskType
+	fmt.Println("data===", data)
+
+
+	fmt.Println("jsonMap===---------", jsonMap)
+
+	result, err := json.Marshal(jsonMap)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("result===", result)
+
+	return string(result)
+}
 
 
 
