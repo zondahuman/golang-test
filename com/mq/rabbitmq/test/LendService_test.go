@@ -10,12 +10,15 @@ import (
 	"golang-test/com/basic/util/random"
 	"golang-test/com/mq/rabbitmq/service"
 	"golang-test/com/mq/rabbitmq/constants"
+	"time"
+	"golang-test/com/basic/util/date"
 )
 
 
 func Test_lendLoanConfirm(t *testing.T) {
 	source := constants.CONFIRMED
-	service.LendMessageConfirm(source)
+	applicationId := "RRD_4efe866496ce919_9"
+	service.LendMessageConfirm(source, applicationId)
 }
 
 
@@ -154,3 +157,20 @@ func Test_switchLendCase(t *testing.T) {
 	fmt.Println("userKey=", userKey)
 
 }
+
+
+func Test_sendLendId(t *testing.T) {
+	result := service.SpliceLendId("RRD_4efe866496ce919_9")
+	fmt.Println("result=", result)
+}
+
+
+func Test_sendTimestamp(t *testing.T) {
+	result := date.CurrentTimestamp()
+	fmt.Println("result=", result)
+	cur := time.Now()
+	timestamp := cur.UnixNano() / 1000000
+	fmt.Println("timestamp=", timestamp)
+}
+
+

@@ -10,6 +10,8 @@ import (
 	"strconv"
 	"golang-test/com/basic/common"
 	"golang-test/com/mq/rabbitmq/constants"
+	"strings"
+	"golang-test/com/basic/util/date"
 )
 
 
@@ -156,7 +158,7 @@ func spliceLend(source string) string {
 }
 
 
-func LendMessageConfirm(source string) int{
+func LendMessageConfirm(source string, applicationId string) int{
 	conn, err := amqp.Dial("amqp://guest:guest@172.16.2.145:15671/")
 	failLendOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
@@ -174,7 +176,7 @@ func LendMessageConfirm(source string) int{
 			ContentType: "text/plain",
 			MessageId:   string(1),
 			Type:        "",
-			Body:        []byte(spliceLendConfirm(source)),
+			Body:        []byte(spliceLendConfirm(source, applicationId)),
 		})
 	log.Println("send ok")
 	failLendOnError(err, "Failed to publish a message")
@@ -182,46 +184,55 @@ func LendMessageConfirm(source string) int{
 }
 
 
-func spliceLendConfirm(source string) string {
-	var userKey string
+func spliceLendConfirm(source string, applicationId string) string {
+	var sendTime int64
 	var body string
-	taskType := util.Number10()
 	switch source {
 		case constants.CONFIRMED:
-			userKey = uuid.GetGuid()
+			sendTime = date.CurrentTimestamp()
 			body = "{\"sendTime\":1489747985863,\"uniqKey\":\"224ijnr0No7zml4J1\",\"source\":\"RRD\",\"type\":\"AUDIT_CONFIRMED\",\"sequenceId\":0,\"data\":{\"taskType\":52}}"
 		default : /* Optional */
-			userKey = ""
+			sendTime = util.TimestampNanos()
 	}
-	userKey = common.Substr(userKey, 0, 15)
+	applicationIdMap := SpliceLendId(applicationId)
+	uniqKey := applicationIdMap["uniqKey"]
+	applicationSource := applicationIdMap["source"]
+	taskType := applicationIdMap["taskType"]
+
 	jsonMap := make(map[string]interface{})
 	err := json.Unmarshal([]byte(body), &jsonMap)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("jsonMap===", jsonMap)
-	jsonMap["uniqKey"] = userKey
+	jsonMap["uniqKey"] = uniqKey
+	jsonMap["source"] = applicationSource
+	jsonMap["sendTime"] = sendTime
 	fmt.Println("jsonMap===", jsonMap)
 
 	data := jsonMap["data"]
-	fmt.Println("data===", data)
+	//fmt.Println("data===", data)
 	//data.(map[string]interface{})["applicationSn"] = userKey
 	data.(map[string]interface{})["taskType"] = taskType
 	fmt.Println("data===", data)
 
-
 	fmt.Println("jsonMap===---------", jsonMap)
-
 	result, err := json.Marshal(jsonMap)
 	if err != nil {
 		fmt.Println(err)
 	}
 	fmt.Println("result===", result)
-
 	return string(result)
 }
 
-
+func SpliceLendId(applicationId string)  map[string]interface{}{
+	array := strings.Split(applicationId,"_")
+	applicationIdMap := make(map[string]interface{})
+	applicationIdMap["source"] = array[0]
+	applicationIdMap["uniqKey"] = array[1]
+	applicationIdMap["taskType"] = array[2]
+	return applicationIdMap
+}
 
 
 
