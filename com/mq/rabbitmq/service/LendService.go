@@ -191,6 +191,9 @@ func spliceLendConfirm(source string, applicationId string) string {
 		case constants.CONFIRMED:
 			sendTime = date.CurrentTimestamp()
 			body = "{\"sendTime\":1489747985863,\"uniqKey\":\"224ijnr0No7zml4J1\",\"source\":\"RRD\",\"type\":\"AUDIT_CONFIRMED\",\"sequenceId\":0,\"data\":{\"taskType\":52}}"
+		case constants.EXPIRED:
+			sendTime = date.CurrentTimestamp()
+			body = "{\"sendTime\":1489747985863,\"uniqKey\":\"224ijnr0No7zml4J1\",\"source\":\"RRD\",\"type\":\"AUDIT_EXPIRED\",\"sequenceId\":0,\"data\":{\"taskType\":52}}"
 		default : /* Optional */
 			sendTime = util.TimestampNanos()
 	}

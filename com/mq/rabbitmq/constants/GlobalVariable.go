@@ -15,8 +15,11 @@ var YM string = "YM"
 var RRD string = "RRD"
 var FU string = "FU"
 var LOANTL string = "LOANTL"
+
 var CONFIRM string = "CONFIRM"
+
 var CONFIRMED string = "CONFIRMED"
+var EXPIRED string = "EXPIRED"
 
 
 
