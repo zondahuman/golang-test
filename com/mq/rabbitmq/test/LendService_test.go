@@ -23,8 +23,13 @@ func Test_lendLoanConfirmed(t *testing.T) {
 
 func Test_lendLoanExpired(t *testing.T) {
 	source := constants.EXPIRED
-	applicationId := "RRD_06bee9e529268ea_7"
+	applicationId := "RRD_099b35478d2a881_1"
 	service.LendMessageConfirm(source, applicationId)
+}
+
+func Test_lendWebapp(t *testing.T) {
+	source := constants.WEBAPP
+	service.LendMessage(source)
 }
 
 func Test_lendBeauty(t *testing.T) {
