@@ -17,13 +17,13 @@ import (
 
 func Test_lendLoanConfirmed(t *testing.T) {
 	source := constants.CONFIRMED
-	applicationId := "RRD_f22809845a7563c_6"
+	applicationId := "RRD_c20d93a0a19d8dc_8"
 	service.LendMessageConfirm(source, applicationId)
 }
 
 func Test_lendLoanExpired(t *testing.T) {
 	source := constants.EXPIRED
-	applicationId := "RRD_099b35478d2a881_1"
+	applicationId := "RRD_516ac94b55c19bf_1"
 	service.LendMessageConfirm(source, applicationId)
 }
 
@@ -41,6 +41,17 @@ func Test_lendLoan(t *testing.T) {
 	source := constants.RRD
 	service.LendMessage(source)
 }
+
+func Test_lendLoanNoConfirm(t *testing.T) {
+	source := constants.RRDF
+	service.LendMessage(source)
+}
+
+func Test_lendLoanNullConfirm(t *testing.T) {
+	source := constants.RRDN
+	service.LendMessage(source)
+}
+
 
 func Test_lendTraining(t *testing.T) {
 	source := constants.TL
