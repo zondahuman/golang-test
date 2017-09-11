@@ -17,13 +17,13 @@ import (
 
 func Test_lendLoanConfirmed(t *testing.T) {
 	source := constants.CONFIRMED
-	applicationId := "RRD_c20d93a0a19d8dc_8"
+	applicationId := "RRD_1b35ff6dcaf6562_8"
 	service.LendMessageConfirm(source, applicationId)
 }
 
 func Test_lendLoanExpired(t *testing.T) {
 	source := constants.EXPIRED
-	applicationId := "RRD_516ac94b55c19bf_1"
+	applicationId := "RRD_b56b33637b32198_9"
 	service.LendMessageConfirm(source, applicationId)
 }
 
