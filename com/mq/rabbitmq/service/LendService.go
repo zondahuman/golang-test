@@ -131,8 +131,8 @@ func spliceLend(source string) string {
 	userBasicInfo.(map[string]interface{})["idNo"] = idNo
 	userBasicInfo.(map[string]interface{})["realName"] = realName
 	userBasicInfo.(map[string]interface{})["userKey"] = userKey
-	userBasicInfo.(map[string]interface{})["confirm"] = false
-	//userBasicInfo.(map[string]interface{})["confirm"] = true
+	//userBasicInfo.(map[string]interface{})["confirm"] = false
+	userBasicInfo.(map[string]interface{})["confirm"] = true
 	//userBasicInfo.(map[string]interface{})["userKey"] = "0f2ada9328b4eb468d6d0122cb9b6924"
 	//userBasicInfo.(map[string]interface{})["callHistoryJobId"] = "8ca7fe67-60a8-4cb1-b48d-07ea5a247039"
 	fmt.Println("userBasicInfo===", userBasicInfo)
