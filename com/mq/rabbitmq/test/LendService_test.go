@@ -52,8 +52,8 @@ func Test_lendLoanWebapp(t *testing.T) {
 	service.LendMessage(source)
 }
 
-func Test_lendLoanNullConfirm(t *testing.T) {
-	source := constants.RRDN
+func Test_lendLoanConfirm(t *testing.T) {
+	source := constants.RRDCONFIRM
 	service.LendMessage(source)
 }
 
