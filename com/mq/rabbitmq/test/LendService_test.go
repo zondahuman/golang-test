@@ -17,7 +17,7 @@ import (
 
 func Test_lendLoanConfirmed(t *testing.T) {
 	source := constants.CONFIRMED
-	applicationId := "RRD_1969138wCc0yxoT3_1"
+	applicationId := "RRD_67784c44af3082e_0"
 	service.LendMessageConfirm(source, applicationId)
 }
 
