@@ -18,7 +18,7 @@ var RRDWEBAPP string = "RRDWEBAPP"
 var RRDCONFIRM string = "RRDCONFIRM"
 var FU string = "FU"
 var LOANTL string = "LOANTL"
-var WEBAPP string = "wepapp"
+var WEBAPP string = "WEBAPP"
 
 var CONFIRM string = "CONFIRM"
 
