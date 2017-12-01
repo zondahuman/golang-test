@@ -51,8 +51,10 @@ func LendMessage(source string) int{
 func spliceLend(source string) string {
 	//idNo := "110101198606250113"
 	//realName := "马克龙"
-	idNo := "150426198611084093"
-	realName := "李新光"
+	idNo := "510212197303147033"
+	realName := "江春"
+	mobile := "13594024015"
+	callHistoryJobId := "f9241a5f-f6d9-4224-940b-8b82b93b0864"
 	var userKey string
 	var body string
 	taskType := util.Number10()
@@ -149,6 +151,13 @@ func spliceLend(source string) string {
 	userBasicInfo.(map[string]interface{})["idNo"] = idNo
 	userBasicInfo.(map[string]interface{})["realName"] = realName
 	userBasicInfo.(map[string]interface{})["userKey"] = userKey
+	userBasicInfo.(map[string]interface{})["mobile"] = mobile
+	userBasicInfo.(map[string]interface{})["callHistoryJobId"] = callHistoryJobId
+
+	//userBasicInfo.(map[string]interface{})["idNo"] = "510212197303147033"
+	//userBasicInfo.(map[string]interface{})["realName"] = "江春"
+	//userBasicInfo.(map[string]interface{})["mobile"] = "13594024015"
+	//userBasicInfo.(map[string]interface{})["userKey"] = userKey
 	//userBasicInfo.(map[string]interface{})["confirm"] = false
 	//userBasicInfo.(map[string]interface{})["confirm"] = true
 	//userBasicInfo.(map[string]interface{})["userKey"] = "0f2ada9328b4eb468d6d0122cb9b6924"
